@@ -12,8 +12,7 @@ return {
         priority = 1000,
       }
     },
-  },1
-
+  },
   {
     "axelvc/template-string.nvim",
     event = "InsertEnter",

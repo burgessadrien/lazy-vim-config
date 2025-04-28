@@ -8,6 +8,16 @@ local function map(mode, lhs, rhs)
     vim.keymap.set(mode, lhs, rhs, { silent = true })
 end
 
+-- Clipboard
+-- Copy to system clipboard
+map("n", "<leader>y", "\"y")
+map("n", "<leader>yy", "\"yy")
+-- Cut to system clipboard
+map("n", "<leader>v", "\v")
+map("n", "<leader>vv", "\"vv")
+-- Paste from system clipboard
+map("n", "<leader>p", "\"p")
+
 -- Neotree
 map("n", "<leader>b", "<CMD>Neotree toggle<CR>")
 map("n", "<leader><S-b>", "<CMD>Neotree focus<CR>")

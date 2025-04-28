@@ -1,4 +1,5 @@
 return {
+  {
     "zaldih/themery.nvim",
     lazy = false,
     config = function()
@@ -13,3 +14,4 @@ return {
       })
     end
   }
+}

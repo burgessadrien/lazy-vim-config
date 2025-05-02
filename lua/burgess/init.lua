@@ -1,4 +1,5 @@
 require("burgess.config.settings")
+require("burgess.config.commands")
 require("burgess.config.mappings")
 require("burgess.config.lazy")
 require("burgess.config.colors")

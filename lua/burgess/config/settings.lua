@@ -1,27 +1,88 @@
-local global = vim.g
-local opt = vim.opt
+-- Set to true if you have a Nerd Font installed and selected in the terminal
+vim.g.have_nerd_font = true
 
--- Editor options
+-- [[ Setting options ]]
+-- See `:help vim.opt`
+-- NOTE: You can change these options as you wish!
+--  For more options, you can see `:help option-list`
 
-opt.number = true -- Print the line number in front of each line
-opt.relativenumber = false -- Show the line number relative to the line with the cursor in front of each line.
-opt.clipboard = "unnamedplus" -- uses the clipboard register for all operations except yank.
-opt.syntax = "on" -- When this option is set, the syntax with this name is loaded.
-opt.autoindent = true -- Copy indent from current line when starting a new line.
-opt.cursorline = true -- Highlight the screen line of the cursor with CursorLine.
-opt.expandtab = true -- In Insert mode: Use the appropriate number of spaces to insert a <Tab>.
-opt.shiftwidth = 2 -- Number of spaces to use for each step of (auto)indent.
-opt.tabstop = 2 -- Number of spaces that a <Tab> in the file counts for.
-opt.encoding = "UTF-8" -- Sets the character encoding used inside Vim.
-opt.ruler = true -- Show the line and column number of the cursor position, separated by a comma.
-opt.mouse = "a" -- Enable the use of the mouse. "a" you can use on all modes
-opt.title = true -- When on, the title of the window will be set to the value of 'titlestring'
-opt.hidden = true -- When on a buffer becomes hidden when it is |abandon|ed
-opt.ttimeoutlen = 0 -- The time in milliseconds that is waited for a key code or mapped key sequence to complete.
-opt.wildmenu = true -- When 'wildmenu' is on, command-line completion operates in an enhanced mode.
-opt.showcmd = true -- Show (partial) command in the last line of the screen. Set this option off if your terminal is slow.
-opt.showmatch = true -- When a bracket is inserted, briefly jump to the matching one.
-opt.inccommand = "split" -- When nonempty, shows the effects of :substitute, :smagic, :snomagic and user commands with the :command-preview flag as you type.
-opt.splitright = true
-opt.splitbelow = true -- When on, splitting a window will put the new window below the current one
-opt.termguicolors = true
+-- Make line numbers default
+vim.opt.number = true
+-- You can also add relative line numbers, to help with jumping.
+--  Experiment for yourself to see if you like it!
+vim.opt.relativenumber = true
+
+-- Enable mouse mode, can be useful for resizing splits for example!
+vim.opt.mouse = 'a'
+
+-- Don't show the mode, since it's already in the status line
+vim.opt.showmode = false
+
+-- Sync clipboard between OS and Neovim.
+--  Schedule the setting after `UiEnter` because it can increase startup-time.
+--  Remove this option if you want your OS clipboard to remain independent.
+--  See `:help 'clipboard'`
+vim.schedule(function()
+  vim.opt.clipboard = 'unnamedplus'
+end)
+
+-- Enable break indent
+vim.opt.breakindent = true
+
+-- Save undo history
+vim.opt.undofile = true
+
+-- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
+-- Keep signcolumn on by default
+vim.opt.signcolumn = 'yes'
+
+-- Decrease update time
+vim.opt.updatetime = 250
+
+-- Decrease mapped sequence wait time
+vim.opt.timeoutlen = 300
+
+-- Configure how new splits should be opened
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+
+-- Sets how neovim will display certain whitespace characters in the editor.
+--  See `:help 'list'`
+--  and `:help 'listchars'`
+vim.opt.list = true
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+
+-- Preview substitutions live, as you type!
+vim.opt.inccommand = 'split'
+
+-- Show which line your cursor is on
+vim.opt.cursorline = true
+
+-- Minimal number of screen lines to keep above and below the cursor.
+vim.opt.scrolloff = 10
+
+-- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
+-- instead raise a dialog asking if you wish to save the current file(s)
+-- See `:help 'confirm'`
+vim.opt.confirm = true
+
+-- [[ Basic Keymaps ]]
+--  See `:help vim.keymap.set()`
+
+-- Clear highlights on search when pressing <Esc> in normal mode
+--  See `:help hlsearch`
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+-- Diagnostic keymaps
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+
+-- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
+-- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
+-- is not what someone will guess without a bit more experience.
+--
+-- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
+-- or just use <C-\><C-n> to exit terminal mode
+vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
